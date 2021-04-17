@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from firebase.firebase_init import firebase_init
 import firebase.database as db
+import recognize_photos.recognition as recognition
 
 
 # initialize Flask
@@ -74,9 +75,10 @@ def get_user_info():
 @app.route('/calculate_results', methods=['POST'])
 def calculate_results():
     '''Calculate results for a pattern'''
-    request_data = request.form
-
-    print(request_data.to_dict())
+    files = request.files
+    for key in files:
+        file = files[key]
+        recognition.get_result(file.read(), request.form['pattern'])
 
     return make_response('OK', 200)
 
