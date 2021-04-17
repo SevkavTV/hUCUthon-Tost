@@ -8,7 +8,12 @@ import requests
 
 from firebase.firebase_init import firebase_init
 import firebase.database as db
+<<<<<<< HEAD
 import photos.recognition as recognition
+=======
+import recognize_photos.recognition as recognition
+
+>>>>>>> 3bf20b535142d47bc895c05bd8cc36dfb71e607c
 
 # initialize Flask
 app = Flask(__name__)
@@ -78,9 +83,14 @@ def calculate_results():
     '''Calculate results for a pattern'''
     files = request.files
     for key in files:
+<<<<<<< HEAD
         print(key)
         file = files[key]
         recognition.aaaa(file.read())
+=======
+        file = files[key]
+        recognition.get_result(file.read(), request.form['pattern'])
+>>>>>>> 3bf20b535142d47bc895c05bd8cc36dfb71e607c
 
     return make_response('OK', 200)
 
