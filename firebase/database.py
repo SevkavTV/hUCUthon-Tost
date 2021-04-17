@@ -1,5 +1,6 @@
 import json
 from firebase_admin import firestore
+from firebase_admin import storage
 
 
 def set_user_info(uid, user):
@@ -55,3 +56,10 @@ def get_pattern_answers(uid, pattern_id):
     pattern_dict = ref_document.get().to_dict()
 
     return pattern_dict['data']
+
+
+def save_photo(photo_path, photo_name):
+    bucket = storage.bucket()
+    blob = bucket.blob(photo_name)
+    blob.upload_from_filename(photo_path + photo_name)
+    return blob.public_url
