@@ -4,9 +4,11 @@ Root file of a server
 
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
+import requests
+
 from firebase.firebase_init import firebase_init
 import firebase.database as db
-
+import photos.recognition as recognition
 
 # initialize Flask
 app = Flask(__name__)
@@ -74,9 +76,11 @@ def get_user_info():
 @app.route('/calculate_results', methods=['POST'])
 def calculate_results():
     '''Calculate results for a pattern'''
-    request_data = request.form
-
-    print(request_data.to_dict())
+    files = request.files
+    for key in files:
+        print(key)
+        file = files[key]
+        recognition.aaaa(file.read())
 
     return make_response('OK', 200)
 
